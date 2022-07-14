@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-example
+  labels:
+    app: prometheus-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-example
+  template:
+    metadata:
+      labels:
+        app: prometheus-example
+    spec:
+      containers:
+      - name: webapp
+        image: ghcr.io/nilic/prometheus-example:1.0
+      - name: webclient
+        image: curlimages/curl:7.84.0
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do curl localhost:8080; sleep 10; done"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prometheus-example
+  name: prometheus-example
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: webapp
+  selector:
+    app: prometheus-example
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus-example
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: prometheus-example
