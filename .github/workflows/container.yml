@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -25,9 +25,11 @@ jobs:
             "ghcr.io/nilic/prometheus-example:${{  github.ref_name }}"
             "ghcr.io/nilic/prometheus-example:latest"
   update-deployment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: build-and-push
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Update image tag in manifest
         uses: mikefarah/yq@master
         with:
