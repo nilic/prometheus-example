@@ -24,3 +24,10 @@ jobs:
           tags: |
             "ghcr.io/nilic/prometheus-example:${{  github.ref_name }}"
             "ghcr.io/nilic/prometheus-example:latest"
+  update-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update image tag in manifest
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '(select(.kind == "Deployment") | .spec.template.spec.containers[] | select(.name == "webapp") | .image) = "ghcr.io/nilic/prometheus-example:${{  github.ref_name }}"' './deploy/prometheus-example.yml'
