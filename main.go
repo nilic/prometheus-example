@@ -12,6 +12,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.HideBanner = true
+	e.File("/favicon.ico", "assets/favicon.ico")
 	e.GET("/", hello)
 
 	// Enable metrics middleware
