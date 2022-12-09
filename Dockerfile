@@ -1,5 +1,5 @@
 # builder image
-FROM golang:1.18-alpine3.16 as builder
+FROM golang:1.19-alpine3.16 as builder
 RUN mkdir /build
 WORKDIR /build
 COPY go.* ./
