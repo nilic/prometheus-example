@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: ghcr.io/nilic/prometheus-example:latest
+          image: ghcr.io/nilic/prometheus-example:1.0.0
         - name: webclient
           image: curlimages/curl:7.84.0
           command: ["/bin/sh"]
