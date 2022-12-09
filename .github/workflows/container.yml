@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
+          ref: main
       - name: Update image tag in manifest
         uses: mikefarah/yq@master
         with:
