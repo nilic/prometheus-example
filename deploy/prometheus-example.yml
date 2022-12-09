@@ -15,12 +15,12 @@ spec:
         app: prometheus-example
     spec:
       containers:
-      - name: webapp
-        image: ghcr.io/nilic/prometheus-example:1.0
-      - name: webclient
-        image: curlimages/curl:7.84.0
-        command: ["/bin/sh"]
-        args: ["-c", "while true; do curl localhost:8080; sleep 10; done"]
+        - name: webapp
+          image: ghcr.io/nilic/prometheus-example:latest
+        - name: webclient
+          image: curlimages/curl:7.84.0
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do curl localhost:8080; sleep 10; done"]
 ---
 apiVersion: v1
 kind: Service
@@ -30,10 +30,10 @@ metadata:
   name: prometheus-example
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
-    name: webapp
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: webapp
   selector:
     app: prometheus-example
   type: ClusterIP
